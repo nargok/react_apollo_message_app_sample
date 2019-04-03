@@ -31,3 +31,17 @@
     transform: rotate(360deg);
   }
 }
+
+.message_item {
+  background-color: aliceblue;
+}
+
+.message_text {
+  font-size: 16pt;
+  text-align: left;
+}
+
+.message_datetime {
+  font-size: 14pt;
+  text-align: right;
+}
