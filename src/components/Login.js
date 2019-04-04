@@ -1,4 +1,15 @@
 import React, { Component } from 'react';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
+import { AUTH_TOKEN } from '../constants';
+
+const LOGIN = gql`
+  mutation signIn($loginName: String!, $loginPassword: String!){
+      signIn(login: $loginName, password: $loginPassword) {
+        token
+      }
+  }
+`;
 
 class Login extends Component {
     constructor() {
@@ -18,6 +29,8 @@ class Login extends Component {
     };
 
     render () {
+        // login_nameとpasswordをStateから取っておく
+        const { loginName, loginPassword } = this.state;
         return (
             <div>
                 <h1>ログイン</h1>
@@ -39,10 +52,30 @@ class Login extends Component {
                     />
                 </div>
                 <div>
-                    <button>ログインする</button>
+                    <Mutation
+                        mutation={LOGIN}
+                        variables={{ loginName, loginPassword }}
+                        onCompleted={data => this._confirm(data)}
+                    >
+                        {
+                            mutation => (
+                                <button onClick={mutation}>ログインする</button>
+                            )
+                        }
+                    </Mutation>
                 </div>
             </div>
         )
+    }
+    // Login MutationのResponseからtokenを取り出す
+    _confirm = async data => {
+        const { token } = data.signIn;
+        this._saveUserDate(token);
+        this.props.history.push('/');
+    }
+    // tokenをlocalstorageへ保存する
+    _saveUserDate = token => {
+        localStorage.setItem(AUTH_TOKEN, token);
     }
 }
 
