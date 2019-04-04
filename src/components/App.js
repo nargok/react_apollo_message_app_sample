@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../App.css';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 

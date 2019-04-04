@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import { ApolloProvider } from 'react-apollo';
+import { BrowserRouter } from "react-router-dom";
+import { Route } from "react-router";
+
+import App from './components/App';
+import Create from './components/Create';
+
+// TODO client系の設定は別ファイルにする
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from "apollo-cache-inmemory";
@@ -26,7 +32,12 @@ const client = new ApolloClient({
 // ApolloClientをrootコンポーネントに適用する
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <App />
+        <BrowserRouter>
+            <React.Fragment>
+                <Route exact path="/" component={App} />
+                <Route path="/create" component={Create} />
+            </React.Fragment>
+        </BrowserRouter>
     </ApolloProvider>,
     document.getElementById('root')
 );
