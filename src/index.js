@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Route } from "react-router";
 
 import App from './components/App';
+import Login from './components/Login';
 import Create from './components/Create';
 
 // TODO client系の設定は別ファイルにする
@@ -35,6 +36,7 @@ ReactDOM.render(
         <BrowserRouter>
             <React.Fragment>
                 <Route exact path="/" component={App} />
+                <Route path="/login" component={Login} />
                 <Route path="/create" component={Create} />
             </React.Fragment>
         </BrowserRouter>
