@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
-import { Mutatoin } from 'react-apollo';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
+
+const CREATE_MESSAGE = gql`
+  mutation createMessage($text: String!) {
+    createMessage(text: $text) {
+      id
+      text
+      createdAt
+    }
+  }
+`;
 
 class Create extends Component {
     constructor() {
@@ -24,9 +35,22 @@ class Create extends Component {
                     >
                     </textarea>
                 </div>
-                <button>投稿する</button>
+                <Mutation
+                    mutation={CREATE_MESSAGE}
+                    variables={{ text }}
+                    onCompleted={ () => this._redirectToRoot() }
+                >
+                    {
+                        mutation => (
+                            <button onClick={mutation}>投稿する</button>
+                        )
+                    }
+                </Mutation>
             </div>
         )
+    }
+    _redirectToRoot = async () => {
+        this.props.history.push('/');
     }
 };
 
