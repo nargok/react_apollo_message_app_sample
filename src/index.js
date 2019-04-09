@@ -12,6 +12,8 @@ import Create from './components/Create';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { setContext } from "apollo-link-context";
+import { AUTH_TOKEN } from "./constants";
 
 // GraphQLで連携するサーバーのURL
 const MESSAGE_APP_BASE_URL = 'https://nrgok-graphql-server-node-js.herokuapp.com/graphql';
@@ -21,12 +23,22 @@ const httpLink = new HttpLink({
     uri: MESSAGE_APP_BASE_URL,
 });
 
+const authLink = setContext((_, { headers }) => {
+    const token = localStorage.getItem(AUTH_TOKEN);
+    return {
+        headers: {
+            ...headers,
+            "x-token": token    ? `${token}` : ''
+        }
+    }
+});
+
 // GraphQLの通信結果をキャッシュする設定
 const cache = new InMemoryCache();
 
 // ApolloClientの設定
 const client = new ApolloClient({
-    link: httpLink,
+    link: authLink.concat(httpLink),
     cache,
 });
 
