@@ -28,6 +28,7 @@ class App extends Component {
             // ローディングしているときの処理
             if (loading) { return <div>Loading...</div> }
             // エラーが起きたときの処理
+            // TODO 認証がきれたときのログイン画面へのリダイレクトを実装する
             else if (error) { return <div>error occurred!</div> }
             // Queryが成功してデータが取得できたときの処理
             else {
