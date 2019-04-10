@@ -28,7 +28,7 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            "x-token": token    ? `${token}` : ''
+            "x-token": token    ? token : ''
         }
     }
 });
