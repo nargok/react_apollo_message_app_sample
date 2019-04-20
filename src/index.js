@@ -47,11 +47,13 @@ const errorLink = onError(  ({ graphQLErrors, networkError, operation, forward }
                     break;
                 case 'UNAUTHENTICATED':
                     console.log("認証が必要");
+                    localStorage.removeItem(AUTH_TOKEN)
                     alert("ログインしてください");
                     browserHistory.push("/login");
                     break;
                 case 'FORBIDDEN':
                     console.log('認証が必要');
+                    localStorage.removeItem(AUTH_TOKEN)
                     alert("ログインしてください");
                     browserHistory.push("/login");
                     break;
