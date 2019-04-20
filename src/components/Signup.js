@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { Link } from 'react-router-dom'
+import {AUTH_TOKEN} from "../constants";
 
 
 const SIGNUP = gql`
@@ -61,11 +62,29 @@ class Signup extends Component {
                  onChange={e => this.handleChangePassword(e.target.value)} />
         </div>
         <div>
-          <button>サインアップ</button>
+          <Mutation
+            mutation={SIGNUP}
+            variables={{ username, email, password }}
+            onCompleted={data => this._confirm(data)}
+          >
+            {
+              mutation => <button onClick={mutation}>サインアップ</button>
+            }
+          </Mutation>
           <Link to="/">TOPへ戻る</Link>
         </div>
       </div>
     )
+  }
+
+  _confirm = async data => {
+    const { token } = data.signUp;
+    this._saveUserData(token);
+    this.props.history.push('/');
+  };
+
+  _saveUserData = token => {
+    localStorage.setItem(AUTH_TOKEN, token)
   }
 }
 
