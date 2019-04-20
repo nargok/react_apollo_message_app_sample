@@ -14,6 +14,7 @@ import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from "apollo-link-context";
 import { AUTH_TOKEN } from "./constants";
+import PersonalPage from "./components/Personal";
 
 // GraphQLで連携するサーバーのURL
 const MESSAGE_APP_BASE_URL = 'https://nrgok-graphql-server-node-js.herokuapp.com/graphql';
@@ -50,6 +51,7 @@ ReactDOM.render(
                 <Route exact path="/" component={App} />
                 <Route path="/login" component={Login} />
                 <Route path="/create" component={Create} />
+                <Route path="/personal/:userId" component={PersonalPage} />
             </React.Fragment>
         </BrowserRouter>
     </ApolloProvider>,
