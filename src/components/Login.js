@@ -72,11 +72,11 @@ class Login extends Component {
         const { token } = data.signIn;
         this._saveUserDate(token);
         this.props.history.push('/');
-    }
+    };
     // tokenをlocalstorageへ保存する
     _saveUserDate = token => {
         localStorage.setItem(AUTH_TOKEN, token);
-    }
+    };
 }
 
 export default Login;

@@ -34,12 +34,12 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            "x-token": token    ? `${token}` : ''
+            "x-token": token ? `${token}` : ''
         }
     }
 });
 
-const errorLink = onError(  ({ graphQLErrors, networkError, operation, forward }) => {
+const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
         for (let err of graphQLErrors) {
             switch (err.extensions.code) {
@@ -48,13 +48,13 @@ const errorLink = onError(  ({ graphQLErrors, networkError, operation, forward }
                     break;
                 case 'UNAUTHENTICATED':
                     console.log("認証が必要");
-                    localStorage.removeItem(AUTH_TOKEN)
+                    localStorage.removeItem(AUTH_TOKEN);
                     alert("ログインしてください");
                     browserHistory.push("/login");
                     break;
                 case 'FORBIDDEN':
                     console.log('認証が必要');
-                    localStorage.removeItem(AUTH_TOKEN)
+                    localStorage.removeItem(AUTH_TOKEN);
                     alert("ログインしてください");
                     browserHistory.push("/login");
                     break;
