@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import { Link } from 'react-router-dom'
 
 
 const PERSONAL_MESSAGE_LIST = gql`
@@ -49,6 +50,11 @@ class PersonalPage extends Component {
           }
         }}
         </Query>
+        <div>
+          <Link to="/">
+            TOPへ戻る
+          </Link>
+        </div>
       </div>
     )
   }
