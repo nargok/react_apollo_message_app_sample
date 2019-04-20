@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter } from "react-router-dom";
 import { Route } from "react-router";
+import { onError } from "apollo-link-error";
+import { ApolloLink, Observable } from "apollo-link";
 
 import App from './components/App';
 import Login from './components/Login';
 import Create from './components/Create';
+
 
 // TODO client系の設定は別ファイルにする
 import { ApolloClient } from 'apollo-client';
@@ -34,12 +37,33 @@ const authLink = setContext((_, { headers }) => {
     }
 });
 
+const errorLink = onError(  ({ graphQLErrors, networkError, operation, forward }) => {
+    if (graphQLErrors) {
+        for (let err of graphQLErrors) {
+            switch (err.extensions.code) {
+                case 'BAD_USER_INPUT':
+                    console.log("もう一度入力内容を確認させよう");
+                    break;
+                case 'UNAUTHENTICATED':
+                    console.log("ここで新しいtokenを取得して再実行する");
+                    break;
+                case 'FORBIDDEN':
+                    console.log('ふぉびどーんΣ(･ω･ﾉ)ﾉ！');
+                    alert("ログインしてください");
+                    this.history.push('/');
+                default:
+            }
+        }
+    }
+    if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+
 // GraphQLの通信結果をキャッシュする設定
 const cache = new InMemoryCache();
 
 // ApolloClientの設定
 const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: ApolloLink.from([authLink, errorLink, httpLink]),
     cache,
 });
 
