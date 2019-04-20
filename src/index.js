@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
-import { BrowserRouter } from "react-router-dom";
 import { Router, Switch } from 'react-router-dom';
 import { Route } from "react-router";
 import { onError } from "apollo-link-error";
-import { ApolloLink, Observable } from "apollo-link";
+import { ApolloLink } from "apollo-link";
 
 import browserHistory from './browserHistory';
 import App from './components/App';
@@ -47,12 +46,15 @@ const errorLink = onError(  ({ graphQLErrors, networkError, operation, forward }
                     console.log("もう一度入力内容を確認させよう");
                     break;
                 case 'UNAUTHENTICATED':
-                    console.log("ここで新しいtokenを取得して再実行する");
+                    console.log("認証が必要");
+                    alert("ログインしてください");
+                    browserHistory.push("/login");
                     break;
                 case 'FORBIDDEN':
-                    console.log('ふぉびどーんΣ(･ω･ﾉ)ﾉ！');
+                    console.log('認証が必要');
                     alert("ログインしてください");
-                    this.history.push('/');
+                    browserHistory.push("/login");
+                    break;
                 default:
             }
         }
@@ -72,15 +74,6 @@ const client = new ApolloClient({
 // ApolloClientをrootコンポーネントに適用する
 ReactDOM.render(
     <ApolloProvider client={client}>
-
-        {/*<BrowserRouter >*/}
-            {/*<React.Fragment>*/}
-                {/*<Route exact path="/" component={App} />*/}
-                {/*<Route path="/login" component={Login} />*/}
-                {/*<Route path="/create" component={Create} />*/}
-                {/*<Route path="/personal/:userId" component={PersonalPage} />*/}
-            {/*</React.Fragment>*/}
-        {/*</BrowserRouter>*/}
         <Router history={browserHistory}>
             <React.Fragment>
                 <Switch>
