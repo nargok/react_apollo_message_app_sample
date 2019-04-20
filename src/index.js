@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter } from "react-router-dom";
+import { Router, Switch } from 'react-router-dom';
 import { Route } from "react-router";
 import { onError } from "apollo-link-error";
 import { ApolloLink, Observable } from "apollo-link";
 
+import browserHistory from './browserHistory';
 import App from './components/App';
 import Login from './components/Login';
 import Create from './components/Create';
@@ -70,14 +72,27 @@ const client = new ApolloClient({
 // ApolloClientをrootコンポーネントに適用する
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <BrowserRouter>
+
+        {/*<BrowserRouter >*/}
+            {/*<React.Fragment>*/}
+                {/*<Route exact path="/" component={App} />*/}
+                {/*<Route path="/login" component={Login} />*/}
+                {/*<Route path="/create" component={Create} />*/}
+                {/*<Route path="/personal/:userId" component={PersonalPage} />*/}
+            {/*</React.Fragment>*/}
+        {/*</BrowserRouter>*/}
+        <Router history={browserHistory}>
             <React.Fragment>
-                <Route exact path="/" component={App} />
-                <Route path="/login" component={Login} />
-                <Route path="/create" component={Create} />
-                <Route path="/personal/:userId" component={PersonalPage} />
+                <Switch>
+                    <Route exact path="/" component={App} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/create" component={Create} />
+                    <Route path="/personal/:userId" component={PersonalPage} />
+                </Switch>
             </React.Fragment>
-        </BrowserRouter>
+        </Router>
     </ApolloProvider>,
     document.getElementById('root')
 );
+
+
