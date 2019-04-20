@@ -12,6 +12,7 @@ const GET_MESSAGES = gql`
         text
         createdAt
         user {
+          id
           username
         }
       }
@@ -48,6 +49,8 @@ class App extends Component {
                   <div>
                     <ul>
                       { edges.map((message) => {
+                        // TODO user_idをリンクに忍ばせる propsで渡す Linkコンポーネントでつなぐ
+                        console.log(message.user.id)
                         return <li key={message.id} className="message_item">
                           <p className="message_text">
                             {message.text} ({message.user.username})
