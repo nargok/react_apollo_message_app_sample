@@ -27,7 +27,7 @@ class PersonalPage extends Component {
   render() {
     const { userId } = this.props.match.params;
     return (
-      <div>
+      <div className="App">
         <h1>Message App</h1>
         <Query query={PERSONAL_MESSAGE_LIST} variables={{ userId }}>
         {({ loading, error, data }) => {
@@ -41,7 +41,13 @@ class PersonalPage extends Component {
                 <h2>{data.user.username}さんのメッセージ一覧</h2>
                 <ul>
                   { messages.map(message => {
-                      return <li key={ message.id }>{ message.text }</li>
+                      return (
+                        <li key={ message.id } className="message_item">
+                          <p className="message_text">
+                            { message.text }
+                          </p>
+                        </li>
+                      )
                     })
                   }
                 </ul>
