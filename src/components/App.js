@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import {AUTH_TOKEN} from "../constants";
 
 const GET_MESSAGES = gql`
   {
@@ -23,6 +24,15 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Message App</h1>
+        <h2>Message一覧</h2>
+        <div>
+          <button onClick={() => this._displayLogin()}>
+            ログイン
+          </button>
+          <button onClick={() => this._logout()}>
+            ログアウト
+          </button>
+        </div>
         <Query query={GET_MESSAGES}>
           {({ loading, error, data }) => {
             // ローディングしているときの処理
@@ -36,7 +46,6 @@ class App extends Component {
               console.log(edges);
               return (
                   <div>
-                    <h2>Message一覧</h2>
                     <ul>
                       { edges.map((message) => {
                         return <li key={message.id} className="message_item">
@@ -57,6 +66,15 @@ class App extends Component {
       </div>
     );
   }
+
+  _displayLogin = () => {
+    this.props.history.push("/login");
+  };
+
+  _logout = () => {
+    localStorage.removeItem(AUTH_TOKEN);
+    alert("ログアウトしました")
+  };
 }
 
 export default App;
