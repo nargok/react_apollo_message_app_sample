@@ -4,8 +4,8 @@ import { Query } from 'react-apollo';
 
 
 const PERSONAL_MESSAGE_LIST = gql`
-  {
-    user(id: 1) {
+  query personalUserPage($userId: ID!) {
+    user(id: $userId) {
       username
       messages {
         id
@@ -24,10 +24,11 @@ class PersonalPage extends Component {
   }
 
   render() {
+    const { userId } = this.props.match.params;
     return (
       <div>
         <h1>Message App</h1>
-        <Query query={PERSONAL_MESSAGE_LIST}>
+        <Query query={PERSONAL_MESSAGE_LIST} variables={{ userId }}>
         {({ loading, error, data }) => {
           if (loading) { return <div>Loading...</div> }
           else if (error) { return <div>error...</div> }

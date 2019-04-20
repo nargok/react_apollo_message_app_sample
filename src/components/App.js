@@ -3,6 +3,7 @@ import '../App.css';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import {AUTH_TOKEN} from "../constants";
+import { Link } from 'react-router-dom'
 
 const GET_MESSAGES = gql`
   {
@@ -53,7 +54,12 @@ class App extends Component {
                         console.log(message.user.id)
                         return <li key={message.id} className="message_item">
                           <p className="message_text">
-                            {message.text} ({message.user.username})
+                            {message.text}
+                            (
+                              <Link to={`/personal/${message.user.id}`}>
+                                {message.user.username}
+                              </Link>
+                            )
                           </p>
                           <p className="message_datetime">
                             {message.createdAt}

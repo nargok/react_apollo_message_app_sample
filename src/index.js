@@ -51,7 +51,7 @@ ReactDOM.render(
                 <Route exact path="/" component={App} />
                 <Route path="/login" component={Login} />
                 <Route path="/create" component={Create} />
-                <Route path="/personal" component={PersonalPage} />
+                <Route path="/personal/:userId" component={PersonalPage} />
             </React.Fragment>
         </BrowserRouter>
     </ApolloProvider>,
