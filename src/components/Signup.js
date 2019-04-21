@@ -3,7 +3,38 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { Link } from 'react-router-dom'
 import {AUTH_TOKEN} from "../constants";
+import MenuAppBar from "./MenuAppBar";
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField';
 
+class OutlinedTextFields extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: this.props,
+    };
+  }
+
+  render() {
+    const {classes} = this.props;
+
+    return (
+      <form noValidate autoComplete="off">
+        <TextField
+          id="outlined-name"
+          label={this.props.name}
+          value={this.state.name}
+          onChange={(e) => this.props.changeField(e.target.value)}
+          type={this.props.type}
+          margin="normal"
+          variant="outlined"
+          fullWidth={true}
+        />
+      </form>
+
+    )
+  }
+}
 
 const SIGNUP = gql`
   mutation signUp($username: String!, $email: String!, $password: String!){
@@ -39,28 +70,24 @@ class Signup extends Component {
     const { username, email, password} = this.state;
 
     return (
-      <div>
+      <div className="App">
+        <MenuAppBar />
         <h2>Sign Up</h2>
-        <div>
-          <label htmlFor="signup_username">ユーザ名</label>
-          <input type='text'
-                 id='signup_username'
-                 placeholder="ユーザ名を入力"
-                 onChange={e => this.handleChangeUsername(e.target.value)} />
-        </div>
-        <div>
-          <label htmlFor="signup_email">メールドレス</label>
-          <input type='email'
-                 id='signup_email'
-                 placeholder="メールアドレスを入力"
-                 onChange={e => this.handleChangeEmail(e.target.value)} />
-        </div>
-        <div>
-          <label htmlFor="signup_password">パスワード</label>
-          <input type='password'
-                 id='signup_password'
-                 onChange={e => this.handleChangePassword(e.target.value)} />
-        </div>
+        <OutlinedTextFields
+          name="Name"
+          type="text"
+          changeField={this.handleChangeUsername}
+        />
+        <OutlinedTextFields
+          name="Email"
+          type="email"
+          changeField={this.handleChangeEmail}
+        />
+        <OutlinedTextFields
+          name="Password"
+          type="password"
+          changeField={this.handleChangePassword}
+        />
         <div>
           <Mutation
             mutation={SIGNUP}
@@ -68,11 +95,17 @@ class Signup extends Component {
             onCompleted={data => this._confirm(data)}
           >
             {
-              mutation => <button onClick={mutation}>サインアップ</button>
+              mutation =>
+                <Button
+                  variant="outlined" color="primary"
+                  onClick={mutation}>
+                    サインアップ
+                </Button>
             }
           </Mutation>
-          <Link to="/">TOPへ戻る</Link>
         </div>
+          <Link to="/">TOPへ戻る</Link>
+
       </div>
     )
   }

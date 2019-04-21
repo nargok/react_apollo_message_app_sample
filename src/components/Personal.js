@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { Link } from 'react-router-dom'
+import MenuAppBar from "./MenuAppBar";
 
 
 const PERSONAL_MESSAGE_LIST = gql`
@@ -28,13 +29,12 @@ class PersonalPage extends Component {
     const { userId } = this.props.match.params;
     return (
       <div className="App">
-        <h1>Message App</h1>
+        <MenuAppBar />
         <Query query={PERSONAL_MESSAGE_LIST} variables={{ userId }}>
         {({ loading, error, data }) => {
           if (loading) { return <div>Loading...</div> }
           else if (error) { return <div>error...</div> }
           else {
-            console.log(data.user);
             const { messages } = data.user;
             return (
               <div>

@@ -2,6 +2,56 @@ import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { AUTH_TOKEN } from '../constants';
+import MenuAppBar from "./MenuAppBar";
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField';
+import {Link} from "react-router-dom";
+
+const styles = theme => ({
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+    },
+    dense: {
+        marginTop: 16,
+    },
+    menu: {
+        width: 200,
+    },
+});
+
+class OutlinedTextFields extends Component {
+    constructor() {
+        super();
+        this.state = {
+            name: this.props,
+        };
+    }
+
+    render() {
+        const {classes} = this.props;
+
+        return (
+          <form noValidate autoComplete="off">
+              <TextField
+                id="outlined-name"
+                label={this.props.name}
+                value={this.state.name}
+                onChange={(e) => this.props.changeField(e.target.value)}
+                type={this.props.type}
+                margin="normal"
+                variant="outlined"
+                fullWidth={true}
+              />
+          </form>
+
+        )
+    }
+}
 
 const LOGIN = gql`
   mutation signIn($loginName: String!, $loginPassword: String!){
@@ -32,25 +82,19 @@ class Login extends Component {
         // login_nameとpasswordをStateから取っておく
         const { loginName, loginPassword } = this.state;
         return (
-            <div>
+            <div className="App">
+                <MenuAppBar />
                 <h1>ログイン</h1>
-                <div>
-                    <label htmlFor="login_name">ユーザ名</label>
-                    <input
-                        type="text"
-                        id="login_name"
-                        placeholder="ユーザ名"
-                        onChange={(event) => this.handleChangeLoginName(event.target.value)}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="login_name">パスワード</label>
-                    <input
-                        type="password"
-                        id="login_password"
-                        onChange={(event) => this.handleChangePassword(event.target.value)}
-                    />
-                </div>
+                <OutlinedTextFields
+                  name="Name"
+                  type="text"
+                  changeField={this.handleChangeLoginName}
+                />
+                <OutlinedTextFields
+                  name="Password"
+                  type="password"
+                  changeField={this.handleChangePassword}
+                />
                 <div>
                     <Mutation
                         mutation={LOGIN}
@@ -59,11 +103,16 @@ class Login extends Component {
                     >
                         {
                             mutation => (
-                                <button onClick={mutation}>ログインする</button>
+                                <Button
+                                  variant="outlined" color="primary"
+                                  onClick={mutation}>
+                                    ログインする
+                                </Button>
                             )
                         }
                     </Mutation>
                 </div>
+                <Link to="/">TOPへ戻る</Link>
             </div>
         )
     }

@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import '../App.css';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import {AUTH_TOKEN} from "../constants";
 import { Link } from 'react-router-dom'
+import MenuAppBar from './MenuAppBar'
+
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
+import { isLoggedIn } from "../commonFunctions";
 
 const GET_MESSAGES = gql`
   {
@@ -25,16 +30,18 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Message App</h1>
+        <MenuAppBar />
         <h2>Message一覧</h2>
-        <div>
-          <button onClick={() => this._displayLogin()}>
-            ログイン
-          </button>
-          <button onClick={() => this._logout()}>
-            ログアウト
-          </button>
-        </div>
+        {
+          isLoggedIn() ?
+            <Fab
+              color="secondary" aria-label="Add"
+              className="add_message"
+              onClick={() => this._displayCreateMessage()}>
+              <AddIcon />
+            </Fab> :
+            ""
+        }
         <Query query={GET_MESSAGES}>
           {({ loading, error, data }) => {
             // ローディングしているときの処理
@@ -45,13 +52,10 @@ class App extends Component {
             // Queryが成功してデータが取得できたときの処理
             else {
               const { edges } = data.messages;
-              console.log(edges);
               return (
                   <div>
                     <ul>
                       { edges.map((message) => {
-                        // TODO user_idをリンクに忍ばせる propsで渡す Linkコンポーネントでつなぐ
-                        console.log(message.user.id)
                         return <li key={message.id} className="message_item">
                           <p className="message_text">
                             {message.text}
@@ -80,10 +84,10 @@ class App extends Component {
     this.props.history.push("/login");
   };
 
-  _logout = () => {
-    localStorage.removeItem(AUTH_TOKEN);
-    alert("ログアウトしました")
-  };
+  _displayCreateMessage = () => {
+    this.props.history.push("/create")
+  }
+
 }
 
 export default App;
