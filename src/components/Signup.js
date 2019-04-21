@@ -28,6 +28,7 @@ class OutlinedTextFields extends Component {
           type={this.props.type}
           margin="normal"
           variant="outlined"
+          fullWidth={true}
         />
       </form>
 
@@ -69,7 +70,7 @@ class Signup extends Component {
     const { username, email, password} = this.state;
 
     return (
-      <div>
+      <div className="App">
         <MenuAppBar />
         <h2>Sign Up</h2>
         <OutlinedTextFields

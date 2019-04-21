@@ -5,6 +5,7 @@ import { AUTH_TOKEN } from '../constants';
 import MenuAppBar from "./MenuAppBar";
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
+import {Link} from "react-router-dom";
 
 const styles = theme => ({
     container: {
@@ -44,6 +45,7 @@ class OutlinedTextFields extends Component {
                 type={this.props.type}
                 margin="normal"
                 variant="outlined"
+                fullWidth={true}
               />
           </form>
 
@@ -80,7 +82,7 @@ class Login extends Component {
         // login_nameとpasswordをStateから取っておく
         const { loginName, loginPassword } = this.state;
         return (
-            <div>
+            <div className="App">
                 <MenuAppBar />
                 <h1>ログイン</h1>
                 <OutlinedTextFields
@@ -110,6 +112,7 @@ class Login extends Component {
                         }
                     </Mutation>
                 </div>
+                <Link to="/">TOPへ戻る</Link>
             </div>
         )
     }

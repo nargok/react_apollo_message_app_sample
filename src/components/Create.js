@@ -4,6 +4,7 @@ import { Mutation } from 'react-apollo';
 import MenuAppBar from "./MenuAppBar";
 import Button from '@material-ui/core/Button'
 import TextField from "@material-ui/core/TextField";
+import {Link} from "react-router-dom";
 
 class OutlinedTextFields extends Component {
   constructor() {
@@ -62,7 +63,7 @@ class Create extends Component {
     render() {
         const { text } = this.state;
         return (
-            <div>
+            <div className="App">
                 <MenuAppBar />
                 <h1>メッセージ作成</h1>
                 <OutlinedTextFields
@@ -70,21 +71,24 @@ class Create extends Component {
                   type="text"
                   changeField={this.handleChangeText}
                 />
-                <Mutation
-                    mutation={CREATE_MESSAGE}
-                    variables={{ text }}
-                    onCompleted={ () => this._redirectToRoot() }
-                >
-                    {
-                        mutation => (
-                            <Button
-                              variant="outlined" color="primary"
-                              onClick={mutation}>
-                              投稿する
-                            </Button>
-                        )
-                    }
-                </Mutation>
+                <div>
+                  <Mutation
+                      mutation={CREATE_MESSAGE}
+                      variables={{ text }}
+                      onCompleted={ () => this._redirectToRoot() }
+                  >
+                      {
+                          mutation => (
+                              <Button
+                                variant="outlined" color="primary"
+                                onClick={mutation}>
+                                投稿する
+                              </Button>
+                          )
+                      }
+                  </Mutation>
+                </div>
+                <Link to="/">TOPへ戻る</Link>
             </div>
         )
     }
