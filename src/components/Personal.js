@@ -12,6 +12,7 @@ const PERSONAL_MESSAGE_LIST = gql`
       messages {
         id
         text
+        createdAt
       }
     }
   }
@@ -45,6 +46,9 @@ class PersonalPage extends Component {
                         <li key={ message.id } className="message_item">
                           <p className="message_text">
                             { message.text }
+                          </p>
+                          <p className="message_datetime">
+                            { message.createdAt }
                           </p>
                         </li>
                       )
