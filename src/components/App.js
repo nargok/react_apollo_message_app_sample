@@ -5,6 +5,12 @@ import { Query } from 'react-apollo';
 import {AUTH_TOKEN} from "../constants";
 import { Link } from 'react-router-dom'
 
+import AppBar from '@material-ui/core/AppBar';
+import MenuAppBar from './MenuAppBar'
+import Button from '@material-ui/core/Button'
+
+
+
 const GET_MESSAGES = gql`
   {
     messages {
@@ -25,15 +31,20 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Message App</h1>
+        <MenuAppBar >
+        </MenuAppBar>
         <h2>Message一覧</h2>
         <div>
-          <button onClick={() => this._displayLogin()}>
+          <Button
+            variant="outlined" color="primary"
+            onClick={() => this._displayLogin()}>
             ログイン
-          </button>
-          <button onClick={() => this._logout()}>
+          </Button>
+          <Button
+            variant="outlined" color="secondary"
+            onClick={() => this._logout()}>
             ログアウト
-          </button>
+          </Button>
         </div>
         <Query query={GET_MESSAGES}>
           {({ loading, error, data }) => {
@@ -81,8 +92,8 @@ class App extends Component {
   };
 
   _logout = () => {
-    localStorage.removeItem(AUTH_TOKEN);
-    alert("ログアウトしました")
+    // localStorage.removeItem(AUTH_TOKEN);
+    // alert("ログアウトしました")
   };
 }
 
