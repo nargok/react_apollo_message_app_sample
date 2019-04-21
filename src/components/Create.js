@@ -66,7 +66,7 @@ class Create extends Component {
             <div className="App">
                 <MenuAppBar />
                 <h1>メッセージ作成</h1>
-                <OutlinedTextFields
+              <OutlinedTextFields
                   name="Message"
                   type="text"
                   changeField={this.handleChangeText}

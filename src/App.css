@@ -45,3 +45,9 @@
   font-size: 14pt;
   text-align: right;
 }
+
+.add_message {
+  position: fixed !important;
+  right: 20px;
+  bottom: 40px;
+}

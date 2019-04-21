@@ -4,12 +4,11 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import {AUTH_TOKEN} from "../constants";
 import { Link } from 'react-router-dom'
-
-import AppBar from '@material-ui/core/AppBar';
 import MenuAppBar from './MenuAppBar'
 import Button from '@material-ui/core/Button'
 
-
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 const GET_MESSAGES = gql`
   {
@@ -40,6 +39,14 @@ class App extends Component {
             ログイン
           </Button>
         </div>
+        <Fab
+          color="secondary" aria-label="Add"
+          className="add_message"
+          onClick={() => this._displayCreateMessage()}
+        >
+          <AddIcon />
+        </Fab>
+
         <Query query={GET_MESSAGES}>
           {({ loading, error, data }) => {
             // ローディングしているときの処理
@@ -85,10 +92,10 @@ class App extends Component {
     this.props.history.push("/login");
   };
 
-  _logout = () => {
-    // localStorage.removeItem(AUTH_TOKEN);
-    // alert("ログアウトしました")
-  };
+  _displayCreateMessage = () => {
+    this.props.history.push("/create")
+  }
+
 }
 
 export default App;
