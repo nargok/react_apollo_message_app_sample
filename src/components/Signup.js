@@ -16,8 +16,6 @@ class OutlinedTextFields extends Component {
   }
 
   render() {
-    const {classes} = this.props;
-
     return (
       <form noValidate autoComplete="off">
         <TextField

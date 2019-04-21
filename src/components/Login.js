@@ -7,23 +7,6 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
 import {Link} from "react-router-dom";
 
-const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-    },
-    dense: {
-        marginTop: 16,
-    },
-    menu: {
-        width: 200,
-    },
-});
-
 class OutlinedTextFields extends Component {
     constructor() {
         super();
@@ -33,8 +16,6 @@ class OutlinedTextFields extends Component {
     }
 
     render() {
-        const {classes} = this.props;
-
         return (
           <form noValidate autoComplete="off">
               <TextField
@@ -48,7 +29,6 @@ class OutlinedTextFields extends Component {
                 fullWidth={true}
               />
           </form>
-
         )
     }
 }

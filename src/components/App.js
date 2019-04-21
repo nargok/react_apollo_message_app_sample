@@ -80,10 +80,6 @@ class App extends Component {
     );
   }
 
-  _displayLogin = () => {
-    this.props.history.push("/login");
-  };
-
   _displayCreateMessage = () => {
     this.props.history.push("/create")
   }
