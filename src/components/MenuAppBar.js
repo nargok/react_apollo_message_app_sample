@@ -60,6 +60,7 @@ class MenuAppBar extends React.Component {
   handleLogout = () => {
     localStorage.removeItem(AUTH_TOKEN);
     this.setState({ anchorEl: null })
+    browserHistory.push('/');
   };
 
   render() {
