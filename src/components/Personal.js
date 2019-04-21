@@ -35,7 +35,6 @@ class PersonalPage extends Component {
           if (loading) { return <div>Loading...</div> }
           else if (error) { return <div>error...</div> }
           else {
-            console.log(data.user);
             const { messages } = data.user;
             return (
               <div>
