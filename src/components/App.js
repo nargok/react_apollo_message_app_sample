@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import '../App.css';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import {AUTH_TOKEN} from "../constants";
 import { Link } from 'react-router-dom'
 import MenuAppBar from './MenuAppBar'
-import Button from '@material-ui/core/Button'
 
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+
+import { isLoggedIn } from "../commonFunctions";
 
 const GET_MESSAGES = gql`
   {
@@ -32,21 +32,16 @@ class App extends Component {
       <div className="App">
         <MenuAppBar />
         <h2>Message一覧</h2>
-        <div>
-          <Button
-            variant="outlined" color="primary"
-            onClick={() => this._displayLogin()}>
-            ログイン
-          </Button>
-        </div>
-        <Fab
-          color="secondary" aria-label="Add"
-          className="add_message"
-          onClick={() => this._displayCreateMessage()}
-        >
-          <AddIcon />
-        </Fab>
-
+        {
+          isLoggedIn() ?
+            <Fab
+              color="secondary" aria-label="Add"
+              className="add_message"
+              onClick={() => this._displayCreateMessage()}>
+              <AddIcon />
+            </Fab> :
+            ""
+        }
         <Query query={GET_MESSAGES}>
           {({ loading, error, data }) => {
             // ローディングしているときの処理

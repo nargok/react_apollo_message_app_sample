@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom'
 import {AUTH_TOKEN} from "../constants";
 
 import browserHistory from '../browserHistory';
+import { isLoggedIn } from "../commonFunctions";
 
 
 const styles = {
@@ -61,6 +62,10 @@ class MenuAppBar extends React.Component {
     localStorage.removeItem(AUTH_TOKEN);
     this.setState({ anchorEl: null })
     browserHistory.push('/');
+  };
+
+  handleLogin = () => {
+    browserHistory.push('/login')
   };
 
   render() {
@@ -113,7 +118,11 @@ class MenuAppBar extends React.Component {
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={this.handleSignUp}>SignUp</MenuItem>
-                  <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
+                  {
+                    isLoggedIn() ?
+                      <MenuItem onClick={this.handleLogout}>Logout</MenuItem> :
+                      <MenuItem onClick={this.handleLogin}>Login</MenuItem>
+                  }
                 </Menu>
               </div>
             )}
