@@ -62,10 +62,6 @@ class MenuAppBar extends React.Component {
     this.setState({ anchorEl: null })
   };
 
-  handleDisplayTop = () => {
-    browserHistory.push('/');
-  }
-
   render() {
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
