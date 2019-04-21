@@ -16,6 +16,9 @@ import Menu from '@material-ui/core/Menu';
 import { Link } from 'react-router-dom'
 import {AUTH_TOKEN} from "../constants";
 
+import browserHistory from '../browserHistory';
+
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -30,10 +33,13 @@ const styles = {
 };
 
 class MenuAppBar extends React.Component {
-  state = {
-    auth: true,
-    anchorEl: null,
-  };
+  constructor() {
+    super();
+    this.state = {
+      auth: true,
+      anchorEl: null,
+    };
+  }
 
   handleChange = event => {
     this.setState({ auth: event.target.checked });
@@ -47,10 +53,18 @@ class MenuAppBar extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  handleSignUp = () => {
+    browserHistory.push('/signup');
+  };
+
   handleLogout = () => {
     localStorage.removeItem(AUTH_TOKEN);
-    // alert("ログアウトしました")
+    this.setState({ anchorEl: null })
   };
+
+  handleDisplayTop = () => {
+    browserHistory.push('/');
+  }
 
   render() {
     const { classes } = this.props;
@@ -72,7 +86,9 @@ class MenuAppBar extends React.Component {
             {/*<IconButton className={classes.menuButton} color="inherit" aria-label="Menu">*/}
               {/*<MenuIcon />*/}
             {/*</IconButton>*/}
-            <Typography variant="h6" color="inherit" className={classes.grow}>
+            <Typography variant="h6"
+                        color="inherit"
+                        className={classes.grow}>
               Message App
             </Typography>
             {auth && (
@@ -99,8 +115,8 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleLogout()}>Logout</MenuItem>
+                  <MenuItem onClick={this.handleSignUp}>SignUp</MenuItem>
+                  <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                 </Menu>
               </div>
             )}

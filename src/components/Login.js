@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { AUTH_TOKEN } from '../constants';
+import MenuAppBar from "./MenuAppBar";
+import Button from '@material-ui/core/Button'
 
 const LOGIN = gql`
   mutation signIn($loginName: String!, $loginPassword: String!){
@@ -33,6 +35,7 @@ class Login extends Component {
         const { loginName, loginPassword } = this.state;
         return (
             <div>
+                <MenuAppBar />
                 <h1>ログイン</h1>
                 <div>
                     <label htmlFor="login_name">ユーザ名</label>
@@ -59,7 +62,11 @@ class Login extends Component {
                     >
                         {
                             mutation => (
-                                <button onClick={mutation}>ログインする</button>
+                                <Button
+                                  variant="outlined" color="primary"
+                                  onClick={mutation}>
+                                    ログインする
+                                </Button>
                             )
                         }
                     </Mutation>

@@ -3,7 +3,8 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { Link } from 'react-router-dom'
 import {AUTH_TOKEN} from "../constants";
-
+import MenuAppBar from "./MenuAppBar";
+import Button from '@material-ui/core/Button'
 
 const SIGNUP = gql`
   mutation signUp($username: String!, $email: String!, $password: String!){
@@ -40,6 +41,7 @@ class Signup extends Component {
 
     return (
       <div>
+        <MenuAppBar />
         <h2>Sign Up</h2>
         <div>
           <label htmlFor="signup_username">ユーザ名</label>
@@ -68,7 +70,12 @@ class Signup extends Component {
             onCompleted={data => this._confirm(data)}
           >
             {
-              mutation => <button onClick={mutation}>サインアップ</button>
+              mutation =>
+                <Button
+                  variant="outlined" color="primary"
+                  onClick={mutation}>
+                    サインアップ
+                </Button>
             }
           </Mutation>
           <Link to="/">TOPへ戻る</Link>

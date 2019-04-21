@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
+import MenuAppBar from "./MenuAppBar";
+import Button from '@material-ui/core/Button'
 
 const CREATE_MESSAGE = gql`
   mutation createMessage($text: String!) {
@@ -23,6 +25,7 @@ class Create extends Component {
         const { text } = this.state;
         return (
             <div>
+                <MenuAppBar />
                 <h1>メッセージ作成</h1>
                 <div>
                     <textarea
@@ -42,7 +45,11 @@ class Create extends Component {
                 >
                     {
                         mutation => (
-                            <button onClick={mutation}>投稿する</button>
+                            <Button
+                              variant="outlined" color="primary"
+                              onClick={mutation}>
+                              投稿する
+                            </Button>
                         )
                     }
                 </Mutation>

@@ -31,19 +31,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MenuAppBar >
-        </MenuAppBar>
+        <MenuAppBar />
         <h2>Message一覧</h2>
         <div>
           <Button
             variant="outlined" color="primary"
             onClick={() => this._displayLogin()}>
             ログイン
-          </Button>
-          <Button
-            variant="outlined" color="secondary"
-            onClick={() => this._logout()}>
-            ログアウト
           </Button>
         </div>
         <Query query={GET_MESSAGES}>

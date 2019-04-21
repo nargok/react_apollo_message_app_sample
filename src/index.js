@@ -20,6 +20,7 @@ import { setContext } from "apollo-link-context";
 import { AUTH_TOKEN } from "./constants";
 import PersonalPage from "./components/Personal";
 import Signup from "./components/Signup";
+import MenuAppBar from "./components/MenuAppBar";
 
 // GraphQLで連携するサーバーのURL
 const MESSAGE_APP_BASE_URL = 'https://nrgok-graphql-server-node-js.herokuapp.com/graphql';
