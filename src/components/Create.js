@@ -3,6 +3,39 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import MenuAppBar from "./MenuAppBar";
 import Button from '@material-ui/core/Button'
+import TextField from "@material-ui/core/TextField";
+
+class OutlinedTextFields extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: this.props,
+    };
+  }
+
+  render() {
+    const {classes} = this.props;
+
+    return (
+      <form noValidate autoComplete="off">
+        <TextField
+          id="outlined-name"
+          label={this.props.name}
+          value={this.state.name}
+          onChange={(e) => this.props.changeField(e.target.value)}
+          type={this.props.type}
+          multiline="true"
+          rows={5}
+          fullWidth={true}
+          margin="normal"
+          variant="outlined"
+        />
+      </form>
+
+    )
+  }
+}
+
 
 const CREATE_MESSAGE = gql`
   mutation createMessage($text: String!) {
@@ -21,23 +54,22 @@ class Create extends Component {
             text: ""
         }
     }
+
+    handleChangeText = message => {
+      this.setState({ text: message });
+    };
+
     render() {
         const { text } = this.state;
         return (
             <div>
                 <MenuAppBar />
                 <h1>メッセージ作成</h1>
-                <div>
-                    <textarea
-                        name="message_text"
-                        id="message_text"
-                        cols="40"
-                        rows="10"
-                        placeholder="メッセージを入力してください"
-                        onChange={(event) => this.setState({ text: event.target.value})}
-                    >
-                    </textarea>
-                </div>
+                <OutlinedTextFields
+                  name="Message"
+                  type="text"
+                  changeField={this.handleChangeText}
+                />
                 <Mutation
                     mutation={CREATE_MESSAGE}
                     variables={{ text }}
