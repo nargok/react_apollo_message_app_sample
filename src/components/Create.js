@@ -4,7 +4,7 @@ import { Mutation } from 'react-apollo';
 import MenuAppBar from "./MenuAppBar";
 import Button from '@material-ui/core/Button'
 import TextField from "@material-ui/core/TextField";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class OutlinedTextFields extends Component {
   constructor() {
@@ -48,6 +48,23 @@ const CREATE_MESSAGE = gql`
   }
 `;
 
+const GET_MESSAGES = gql`
+  {
+    messages {
+      edges {
+        id
+        text
+        createdAt
+        user {
+          id
+          username
+        }
+      }
+    }
+  }
+`;
+
+
 class Create extends Component {
     constructor() {
         super()
@@ -76,6 +93,13 @@ class Create extends Component {
                       mutation={CREATE_MESSAGE}
                       variables={{ text }}
                       onCompleted={ () => this._redirectToRoot() }
+                      refetchQueries={() => {
+                        return [
+                          {
+                            query: GET_MESSAGES
+                          }
+                        ]
+                      }}
                   >
                       {
                           mutation => (
@@ -92,7 +116,7 @@ class Create extends Component {
             </div>
         )
     }
-    _redirectToRoot = async () => {
+    _redirectToRoot = () => {
         this.props.history.push('/');
     }
 };
